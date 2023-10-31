@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Jenis_pembayaran;
 use App\Models\Pembayaran;
 use App\Models\Siswa;
+use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
 
 class PembayaranController extends Controller
@@ -27,9 +28,11 @@ class PembayaranController extends Controller
             ]);
         }else {
             $data_pembayaran = Pembayaran::all();
+            $data_tahun_ajaran = TahunAjaran::where('status_aktif', 1)->first();
             return view('dashboard.page.pembayaran.index', [
                 "title" => "Pembayaran",
-                "data_pembayaran" => $data_pembayaran
+                "data_pembayaran" => $data_pembayaran,
+                "data_tahun_ajaran" => $data_tahun_ajaran
             ]);
         }
     }
@@ -37,25 +40,13 @@ class PembayaranController extends Controller
     public function store(Request $request)
     {   
         $validateData = $request->validate([
-            "siswa_id" => "required",
-            "jenis_pembayaran_id" => "required",
             "tahun_ajaran_id" => "required",
-            "total_biaya" => "required",
+            "semester" => "required",
+            "tanggal_tagihan" => "required",
+            "batas_pembayaran" => "required"
         ]);
-         // Mendapatkan nilai dari input
-        $rupiahValue = $validateData['total_biaya'];
-
-        // Menghapus format rupiah dan karakter non-digit
-        $cleanedValue = preg_replace("/[^0-9]/", "", $rupiahValue);
-
-        // Mengubah nilai ke tipe data angka (integer atau float), sesuaikan dengan kebutuhan Anda
-        $numericValue = (int) $cleanedValue;
-        $validateData['total_biaya'] = $numericValue;
-
-        $validateData['already_pay'] = 1;
-
-        $pembayaranID = Pembayaran::create($validateData)->id;
-        return redirect('/admin/pembayaran/detail/' . $pembayaranID . '/show')->with("success", "Pembayaran Berhasil!");
+        Pembayaran::create($validateData);
+        return back()->with("success", "Pembayaran Berhasil!");
     }
 
     public function show($id)
@@ -64,6 +55,12 @@ class PembayaranController extends Controller
         return view('dashboard.page.pembayaran.detail', [
             "data_pembayaran" => $data_pembayaran
         ]);
+    }
+
+    public function destroy($id)
+    {
+        Pembayaran::destroy($id);
+        return back()->with("success", "Data Berhasil Dihapus!");
     }
 
 }

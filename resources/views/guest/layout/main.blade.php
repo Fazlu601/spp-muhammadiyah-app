@@ -10,15 +10,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{ asset('guest/css/styles.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('guest/css/custom.css') }}">
         <!-- Fonts CSS-->
-        <link rel="stylesheet" href="{{ asset('css/heading.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/body.css') }}">
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body id="page-top">
-        <script>
-            Swal.fire('SweetAlert2 is working!')
-        </script>
         @include('guest.layout.nav')
         @yield('main-content-guest')
         <footer class="footer text-center">
@@ -67,14 +63,9 @@
             }
         </script>
         <!-- Bootstrap core JS-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-        <!-- Third party plugin JS-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-        <!-- Contact form JS-->
-        <script src="{{ asset('guest/assets/mail/jqBootstrapValidation.js') }}"></script>
-        <script src="{{ ('guest/assets/mail/contact_me.js') }}"></script>
-        <!-- Core theme JS-->
-        <script src="{{ asset('guest/js/scripts.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+        {{-- <!-- Core theme JS-->
+        <script src="{{ asset('guest/js/scripts.js') }}"></script> --}}
     </body>
 </html>

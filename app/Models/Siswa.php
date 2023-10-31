@@ -33,5 +33,9 @@ class Siswa extends Model implements Authenticatable
         return $this->hasMany(Pembayaran::class);
     }
 
+    public function DetailPembayaran()
+    {
+        return $this->hasMany(DetailPembayaran::class);
+    }
 
 }

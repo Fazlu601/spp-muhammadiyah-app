@@ -1,0 +1,11 @@
+
+.navigasi-info {
+    text-decoration: none;
+}
+
+.navigasi-info:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: ease-in-out 0.5s;
+}
+

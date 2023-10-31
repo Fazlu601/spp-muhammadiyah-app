@@ -1,0 +1,69 @@
+@extends('guest.layout.main')
+
+@section('main-content-guest')
+    @php
+        $siswa = Auth::guard('siswas')->user();
+    @endphp
+    <main class="masthead bg-light text-white text-center">
+        <div class="container-fluid d-flex align-items-center flex-column">
+            <div class="row w-100 p-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-light">
+                      <li class="breadcrumb-item"><a href="/index">Beranda</a></li>
+                      <li class="breadcrumb-item active" aria-current="page">Pembayaran SPP</li>
+                    </ol>
+                  </nav>
+                <div class="table-responsive w-100 mx-auto">
+                    <h3 class="text-dark text-left my-3">Data Tagihan SPP</h3>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>NO.</th>
+                                    <th>JENIS TAGIHAN</th>
+                                    <th>TANGGAL TAGIHAN</th>
+                                    <th>BATAS AKHIR PEMBAYARAN</th>
+                                    <th>SEMESTER</th>
+                                    <th>TAHUN</th>
+                                    <th>STATUS</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (count($data_pembayaran) == 0)
+                                    <td colspan="7">Tidak Ada Data!</td>
+                                @else
+                                <tr>
+                                    @foreach ($data_pembayaran as $items)   
+                                    @php
+                                      $tanggal_tagihan = \Carbon\Carbon::parse($items->tanggal_tagihan);
+                                      $batas_pembayaran = \Carbon\Carbon::parse($items->batas_pembayaran);
+                                    @endphp 
+                                    <tr>
+                                        <td >{{ $loop->iteration }}</td>
+                                        <td>{{ $items->jenis_tagihan }}</td>
+                                        <td>{{ $tanggal_tagihan->format('d F Y');}}</td>
+                                        <td>{{ $batas_pembayaran->format('d F Y'); }}</td>
+                                        <td>{{ $items->semester }}</td>
+                                        <td>{{ $items->TahunAjaran->tahun_pelajaran}}</td>
+                                        <td>Belum Dibayar</td>
+                                        <td class="d-flex">
+                                            <a href="{{ route('konfirmasi.pembayaran', [
+                                                "pembayaran_id" => $items->id,
+                                                "tahun_ajaran_id" => $items->TahunAjaran->id,
+                                                "siswa_id" => Auth::guard('siswas')->user()->id,
+                                                "prodi_id" => Auth::guard('siswas')->user()->prodi_id,
+                                                "kelas_id" => Auth::guard('siswas')->user()->kelas_id]) }}" class="btn btn-primary rounded-0 m-2" style="font-size: 12px;">
+                                                Konfirmasi Pembayaran
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+        </div>
+    </main>
+@endsection

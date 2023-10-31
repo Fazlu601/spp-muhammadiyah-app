@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
 
         TahunAjaran::create([
             "tahun_pelajaran" => "2023/2024",
+            "status_aktif" => 1
         ]);
         Prodi::create([
            "program_studi" => "IPA"

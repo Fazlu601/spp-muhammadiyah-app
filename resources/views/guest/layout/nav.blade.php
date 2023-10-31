@@ -6,20 +6,30 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 @if(Auth::guard('siswas')->check())
-                    <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ request()->is('data_siswa') ? '/data_spp/' . Auth::guard('siswas')->user()->id : '/data_siswa' }}">{{ request()->is('data_siswa') ? 'DATA SPP' : 'DATA SISWA' }}</a>
-                    </li>
-                    <form action="/logout" class="nav-item mx-0 mx-lg-1" method="POST">
-                        @csrf
-                        <button type="button" onclick="popUp({
-                            'title' : 'Yakin ingin keluar?',
-                            'formElement' : this.form,
-                            'confirmText' : 'Ya, keluar'
-                        })" class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger bg-secondary text-light border-0" >
-                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                            LOGOUT
-                        </button>
-                    </form>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      {{ Auth::guard('siswas')->user()->nisn }}
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">Profile</a></li>
+                      <li><a class="dropdown-item" href="#">Data Pembayaran</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li>
+                        <form action="/logout" class="mx-0 mx-lg-1" method="POST">
+                            @csrf
+                            <button type="button" onclick="popUp({
+                                'title' : 'Yakin ingin keluar?',
+                                'formElement' : this.form,
+                                'confirmText' : 'Ya, keluar'
+                            })" class="dropdown-item" >
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
+                            </button>
+                        </form>
+                      </li>
+                    </ul>
+                  </li>
+                  
                 @else
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/admin/login">LOGIN ADMIN</a>
                     </li>

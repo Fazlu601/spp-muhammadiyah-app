@@ -24,22 +24,25 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                    @foreach ($data_pembayaran as $item)
+                                    @foreach ($data_pembayaran as $items)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->jenis_tagihan }}</td>
-                                            <td>{{ $item->tanggal_tagihan }}</td>
-                                            <td>{{ $item->batas_pembayaran }}</td>
-                                            <td>{{ $item->semester }}</td>
-                                            <td>{{ $item->TahunAjaran->tahun_pelajaran}}</td>
+                                            <td>{{ $items->jenis_tagihan }}</td>
+                                            <td>{{ $items->tanggal_tagihan }}</td>
+                                            <td>{{ $items->batas_pembayaran }}</td>
+                                            <td>{{ $items->semester }}</td>
+                                            <td>{{ $items->TahunAjaran->tahun_pelajaran}}</td>
                                             <td class="d-flex">
-                                                <a href="/admin/pembayaran/detail/{{ $item->id }}/show" class="badge badge-primary m-2">
+                                                <a href="/admin/pembayaran/detail/{{ $items->id }}/show" class="badge badge-primary m-2">
                                                     <span class="fa fa-info text-light p-2"></span>
                                                 </a>
-                                                <form id="form-delete-{{ $item->id }}" method="POST" action="/admin/pembayaran/{{ $item->id }}/delete">
+                                                <form id="form-delete" method="POST" action="/admin/pembayaran/{{ $items->id }}/delete">
                                                     @csrf
                                                     @method('delete')
-                                                    <button type="button" onclick="popUp('form-delete-{{ $item->id }}')" class="badge badge-danger m-2 border-0">
+                                                    <button type="button" onclick="showAlert({
+                                                        'title' : 'yakin ingin menghapus data berikut?',
+                                                        'form' : this.form
+                                                    })" class="badge badge-danger m-2 border-0">
                                                         <span class="fa fa-trash text-light p-2"></span>
                                                     </button>
                                                 </form>
@@ -58,32 +61,66 @@
 
 
               <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Tambah Tahun Ajaran Baru</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form action="/admin/tahun-ajaran/create" method="POST">
-            <div class="modal-body">
-                @csrf
-                <div class="form-group mb-3">
-                    <label for="tahun_pelajaran">*Tahun ajaran baru</label>
-                    <input type="text" name="tahun_pelajaran" id="tahun_pelajaran" class="form-control">
+    <div class="modal fade" id="staticBackdrop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Tambah Data Pembayaran</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <form action="/admin/pembayaran/create" method="POST">
+                <div class="modal-body">
+                    @csrf
+                    <div class="form-group mb-3">
+                        <label for="jenis_tagihan">*Jenis Tagihan</label>
+                        <select class="form-control" id="jenis_tagihan">
+                            <option value="" disabled selected>--Pilih Jenis Tagihan--</option>
+                            <option>Biaya SPP</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="tahun_ajaran">*Tahun Ajaran</label>
+                        <input type="hidden" name="tahun_ajaran_id" value="{{ $data_tahun_ajaran->id }}">
+                        <input type="text" readonly value="{{ $data_tahun_ajaran->tahun_pelajaran }}"  id="tahun_ajaran_id" class="form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="tahun_ajaran">*Semester</label>
+                    <div class="row px-3">
+                            <div class="form-check col-3">
+                                <input class="form-check-input" checked type="radio" name="semester" id="ganjil" value="ganjil">
+                                <label class="form-check-label" for="ganjil">
+                                    Ganjil
+                                </label>
+                            </div>
+                    
+                            <div class="form-check col-3">
+                                <input class="form-check-input" type="radio" name="semester" id="genap" value="genap">
+                                <label class="form-check-label" for="genap">
+                                    Genap
+                                </label>
+                            </div>
+                    </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="tanggal_tagihan">*Tanggal Tagihan</label>
+                        <input type="date" name="tanggal_tagihan" value="{{ date('Y-m-d') }}" class="form-control" id="tanggal_tagihan"/>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="tanggal_tagihan">*Batas Pembayaran</label>
+                        <input type="date" name="batas_pembayaran" min="{{ date('Y-m-d') }}" class="form-control" id="tanggal_tagihan"/>
+                    </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-            <button type="submit" class="btn btn-primary">Simpan</button>
-            </div>
-        </form>
-      </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+        </div>
     </div>
-  </div>
 
 
         {{-- <script>

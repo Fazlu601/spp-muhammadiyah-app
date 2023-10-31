@@ -29,7 +29,7 @@ class AuthenticateController extends Controller
         if (Auth::guard('siswas')->attempt($credentials)) {
             $request->session()->regenerate();
  
-            return redirect()->intended('/data_siswa');
+            return redirect()->intended('/index');
         }
  
         return back()->withErrors([

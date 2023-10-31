@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    
     <title>SB Admin 2 - Dashboard</title>
     <!-- Custom fonts for this template-->
     <link href="{{ asset('dashboard/library/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -95,6 +95,20 @@
                  formElement.submit(); // Submit the form element
          })
      }
+
+     function showAlert(items) {
+            Swal.fire({
+                title: items.title,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Ya",
+                cancelButtonText: "Batal",
+            }).then((result) => {
+                if (result.isConfirmed)
+                    items.form.submit(); // Submit the form element
+            })
+        }
      </script>
 
     <!-- Bootstrap core JavaScript-->
