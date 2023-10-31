@@ -26,8 +26,10 @@ class PembayaranController extends Controller
                 "data_pembayaran" => $data_pembayaran
             ]);
         }else {
+            $data_pembayaran = Pembayaran::all();
             return view('dashboard.page.pembayaran.index', [
-                "title" => "Pembayaran"
+                "title" => "Pembayaran",
+                "data_pembayaran" => $data_pembayaran
             ]);
         }
     }

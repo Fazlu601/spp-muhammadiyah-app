@@ -28,11 +28,6 @@ class Siswa extends Model implements Authenticatable
         return $this->belongsTo(Kelas::class, 'kelas_id', 'id');
     }
 
-    public function Persyaratan()
-    {
-        return $this->hasOne(Persyaratan::class);
-    }
-
     public function Pembayaran()
     {
         return $this->hasMany(Pembayaran::class);

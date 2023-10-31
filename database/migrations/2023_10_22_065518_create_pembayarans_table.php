@@ -13,14 +13,12 @@ return new class extends Migration
     {
         Schema::create('pembayarans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('siswa_id');
-            $table->unsignedBigInteger('jenis_pembayaran_id');
+            $table->string('jenis_tagihan')->default('Biaya SPP');
             $table->unsignedBigInteger('tahun_ajaran_id');
-            $table->integer('total_biaya');
-            $table->boolean('already_pay')->default(0);
+            $table->enum('semester', ['ganjil', 'genap']);
+            $table->date('tanggal_tagihan');
+            $table->date('batas_pembayaran');
             $table->timestamps();
-            $table->foreign('siswa_id')->references('id')->on('siswas');
-            $table->foreign('jenis_pembayaran_id')->references('id')->on('jenis_pembayarans');
             $table->foreign('tahun_ajaran_id')->references('id')->on('tahun_ajarans');
         });
     }

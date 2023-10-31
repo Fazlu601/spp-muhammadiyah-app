@@ -2,147 +2,12 @@
 
 @section('main-content-dashboard')
         <!-- Content Row -->
-        <div class="row">
-            <!-- DataTales Example -->
-            <div class="card shadow w-100 mb-4">
-                <div class="card-header py-3">
-                    <div class="form-group">
-                        <form class="col-3 d-flex" action="/admin/pembayaran" method="get">
-                            <input type="search" name="search_nisn" placeholder="Cari NISN..." class="form-control rounded-0">
-                            <button type="submit" class="btn btn-dark rounded-0 ms-0">Cari</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="card-body">
-                    @if (isset($data_siswa))
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="table-responsive mb-3 w-100">
-                                    <table class="table table-bordered" width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th>NISN</th>
-                                                <td>{{ $data_siswa->nisn }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Nama Siswa</th>
-                                                <td>{{ $data_siswa->nama_siswa }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Program Studi</th>
-                                                <td>{{ $data_siswa->Prodi->program_studi }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Kelas</th>
-                                                <td>{{ $data_siswa->Kelas->kelas }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Tahun Ajaran</th>
-                                                <td>{{ $data_siswa->TahunAjaran->tahun_pelajaran }}</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                               <th>Nominal Pembayaran SPP</th>
-                                               <td>Rp. {{ number_format($data_jenis_pembayaran->nominal) }}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>Nama Berkas</th>
-                                        <th>Berkas</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Scan Ijazah Terakhir</td>
-                                        <td>
-                                            @if (isset($data_siswa->Persyaratan->ijazah_terakhir))
-                                            <img src="{{ asset('storage/dokumen-persyaratan' . $data_siswa->Persyaratan->ijazah_terakhir) }}" width="100" alt="Ijazah">
-                                            @else
-                                            <span class="badge badge-danger p-2">Belum Upload</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if (isset($data_siswa->Persyaratan->ijazah_terakhir))
-                                                <a href="/storage/dokumen-persyaratan/{{ $data_siswa->Persyaratan->ijazah_terakhir }}" target="_blank" class="btn btn-primary">
-                                                <span class="fa fa-eye"></span>
-                                                </a>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Scan Kartu Keluarga</td>
-                                        <td>
-                                            @if (isset($data_siswa->Persyaratan->kartu_keluarga))
-                                            <img src="{{ asset('storage/dokumen-persyaratan' . $data_siswa->Persyaratan->kartu_keluarga) }}" width="100" alt="Ijazah">
-                                            @else
-                                            <span class="badge badge-danger p-2">Belum Upload</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if (isset($data_siswa->Persyaratan->kartu_keluarga))
-                                                <a href="/storage/dokumen-persyaratan/{{ $data_siswa->Persyaratan->kartu_keluarga }}" target="_blank" class="btn btn-primary">
-                                                <span class="fa fa-eye"></span>
-                                                </a>                                  
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Scan Akte Kelahiran</td>
-                                        <td>
-                                            @if (isset($data_siswa->Persyaratan->akte_kelahiran))
-                                            <img src="{{ asset('storage/dokumen-persyaratan' . $data_siswa->Persyaratan->akte_kelahiran) }}" width="100" alt="Akte">
-                                            @else
-                                            <span class="badge badge-danger p-2">Belum Upload</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if (isset($data_siswa->Persyaratan->akte_kelahiran))
-                                                <a href="/storage/dokumen-persyaratan/{{ $data_siswa->Persyaratan->akte_kelahiran }}" target="_blank" class="btn btn-primary">
-                                                <span class="fa fa-eye"></span>
-                                                </a>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        <form action="/admin/pembayaran" method="post">
-                            @csrf
-                            <input type="hidden" name="siswa_id" value="{{ $data_siswa->id }}">
-                            <input type="hidden" name="jenis_pembayaran_id" value="{{ $data_jenis_pembayaran->id }}">
-                            <input type="hidden" name="tahun_ajaran_id" value="{{ $data_jenis_pembayaran->tahun_ajaran_id }}">
-                            <div class="form-group mb-3 w-50 d-flex">
-                                <label class="mr-3 text-danger font-weight-bold">Bayar*</label>
-                                <input type="text" required id="rupiahInput" oninput="formatRupiah(this)"  name="total_biaya" class="form-control mx-2">
-                                <i class="text-danger font-wight-bold">HARAP MEMBAYAR DENGAN UANG PAS!!</i>
-                            </div>
-                            <div class="form-group w-50">
-                                <button type="button" onclick="popUp({
-                                    'title' : 'Konfirmasi Pembayaran?',
-                                    'formElement' : this.form,
-                                    'confirmText' : 'Ya, bayar sekarang!'
-                                })" class="btn btn-primary w-100">Bayar Sekarang</button>
-                            </div>
-                        </form>
-                    @endif
-                </div>
-            </div> 
-        </div>
           <!-- Content Row -->
           <div class="row">
             <!-- DataTales Example -->
             <div class="card shadow w-100 mb-4">
                 <div class="card-header py-3">
-                 <h5>Data Pembayaran Siswa</h5>
+                    <button class="btn btn-dark" data-toggle="modal" data-target="#staticBackdrop">Tambah Data Baru</button>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -150,26 +15,23 @@
                             <thead>
                                 <tr>
                                     <th>NO.</th>
-                                    <th>NAMA SISWA</th>
-                                    <th>TAHUN AJARAN</th>
-                                    <th>PRODI</th>
-                                    <th>KELAS</th>
-                                    <th>NOMINAL</th>
-                                    <th>DIBAYAR PADA</th>
+                                    <th>JENIS TAGIHAN</th>
+                                    <th>TANGGAL TAGIHAN</th>
+                                    <th>BATAS AKHIR PEMBAYARAN</th>
+                                    <th>SEMESTER</th>
+                                    <th>TAHUN</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (isset($data_siswa))
                                     @foreach ($data_pembayaran as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->Siswa->nama_siswa }}</td>
-                                            <td>{{ $item->Jenis_pembayaran->TahunAjaran->tahun_pelajaran}}</td>
-                                            <td>{{ $item->Jenis_pembayaran->Prodi->program_studi }}</td>
-                                            <td>{{ $item->Jenis_pembayaran->Kelas->kelas }}</td>
-                                            <td>Rp. {{ number_format($item->total_biaya) }}</td>
-                                            <td>{{ $item->created_at }}</td>
+                                            <td>{{ $item->jenis_tagihan }}</td>
+                                            <td>{{ $item->tanggal_tagihan }}</td>
+                                            <td>{{ $item->batas_pembayaran }}</td>
+                                            <td>{{ $item->semester }}</td>
+                                            <td>{{ $item->TahunAjaran->tahun_pelajaran}}</td>
                                             <td class="d-flex">
                                                 <a href="/admin/pembayaran/detail/{{ $item->id }}/show" class="badge badge-primary m-2">
                                                     <span class="fa fa-info text-light p-2"></span>
@@ -184,7 +46,6 @@
                                             </td>
                                         </tr>
                                     @endforeach
-                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -194,7 +55,38 @@
         </div>
 
 
-        <script>
+
+
+              <!-- Modal -->
+<div class="modal fade" id="staticBackdrop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Tambah Tahun Ajaran Baru</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="/admin/tahun-ajaran/create" method="POST">
+            <div class="modal-body">
+                @csrf
+                <div class="form-group mb-3">
+                    <label for="tahun_pelajaran">*Tahun ajaran baru</label>
+                    <input type="text" name="tahun_pelajaran" id="tahun_pelajaran" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+        {{-- <script>
             function formatRupiah(input) {
                 // Menghapus karakter non-digit
                 let value = input.value.replace(/\D/g, '');
@@ -205,6 +97,6 @@
                 // Memasukkan format rupiah ke dalam input
                 input.value = 'Rp ' + value;
             }
-        </script>
+        </script> --}}
 
 @endsection

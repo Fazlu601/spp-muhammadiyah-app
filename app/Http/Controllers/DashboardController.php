@@ -17,13 +17,11 @@ class DashboardController extends Controller
         $jumlah_siswa = Siswa::all()->count();
         $jumlah_kelas = Kelas::all()->count();
         $jumlah_prodi = Prodi::all()->count();
-        $jumlah_spp = Pembayaran::sum('total_biaya');
         return view('dashboard.dashboard',[
             "title" => "Dashboard",
             "jumlah_siswa" => $jumlah_siswa,
             "jumlah_kelas" => $jumlah_kelas,
             "jumlah_prodi" => $jumlah_prodi,
-            "jumlah_spp" => $jumlah_spp,
         ]);
     }
 

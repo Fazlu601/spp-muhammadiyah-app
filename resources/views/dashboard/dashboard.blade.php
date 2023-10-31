@@ -71,7 +71,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-light text-uppercase mb-1">
                                 Saldo Tahun Ajaran Ini</div>
-                            <div class="h5 mb-0 font-weight-bold text-light">Rp. {{ number_format($jumlah_spp) }}</div>
+                            {{-- <div class="h5 mb-0 font-weight-bold text-light">Rp. {{ number_format($jumlah_spp) }}</div> --}}
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-comments fa-2x text-light"></i>

@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Jenis_pembayaran;
 use App\Models\Kelas;
+use App\Models\Pembayaran;
 use App\Models\Persyaratan;
 use App\Models\Prodi;
 use App\Models\Siswa;
@@ -58,7 +59,7 @@ class DatabaseSeeder extends Seeder
             "tanggal_lahir" => "2001-11-06",
             "password" => Hash::make('061101')
         ]);
-        Persyaratan::create(["siswa_id" => 1]);
+
         Siswa::create([
             "nisn" => "10002",
             "nama_siswa" => "Rudi Cahyono",
@@ -69,7 +70,6 @@ class DatabaseSeeder extends Seeder
             "password" => Hash::make('081201')
         ]);
 
-        Persyaratan::create(["siswa_id" => 2]);
         Siswa::create([
             "nisn" => "10003",
             "nama_siswa" => "Wak Okto",
@@ -80,7 +80,6 @@ class DatabaseSeeder extends Seeder
             "password" => Hash::make('101000')
         ]);
 
-        Persyaratan::create(["siswa_id" => 3]);
         Siswa::create([
             "nisn" => "10004",
             "nama_siswa" => "Angel",
@@ -91,7 +90,12 @@ class DatabaseSeeder extends Seeder
             "password" => Hash::make('230900')
         ]);
 
-        Persyaratan::create(["siswa_id" => 3]);
-
+        Pembayaran::create([
+            "tahun_ajaran_id" => 1,
+            "semester" => "genap",
+            "tanggal_tagihan" => "2023-10-31",
+            "batas_pembayaran" => "2023-11-25"
+        ]);
+        
     }
 }
