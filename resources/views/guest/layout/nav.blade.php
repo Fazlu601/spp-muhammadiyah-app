@@ -11,8 +11,7 @@
                       {{ Auth::guard('siswas')->user()->nisn }}
                     </a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Profile</a></li>
-                      <li><a class="dropdown-item" href="#">Data Pembayaran</a></li>
+                      <li><a class="dropdown-item" href="/profile/{{ Auth::guard('siswas')->user()->id }}">Profile</a></li>
                       <li><hr class="dropdown-divider"></li>
                       <li>
                         <form action="/logout" class="mx-0 mx-lg-1" method="POST">

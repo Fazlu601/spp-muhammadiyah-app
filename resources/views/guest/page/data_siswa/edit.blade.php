@@ -9,7 +9,7 @@
             <div class="col-7 shadow-md mx-auto">
                 <div class="row text-dark text-left mb-3">
                     <h5 class="fw-bold text-uppercase">Edit Data Diri</h5>
-                  <form action="/data_siswa/{{ $data_siswa->id }}/update" enctype="multipart/form-data" class="w-100 p-3" method="post">
+                  <form action="/profile/{{ $data_siswa->id }}/update" enctype="multipart/form-data" class="w-100 p-3" method="post">
                         @csrf
                         @method('put')
                         <div class="form-group mb-3">

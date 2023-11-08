@@ -21,7 +21,7 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Tahun Ajaran</th>
-                                    <th>Program Studi</th>
+                                    <th>Jurusan</th>
                                     <th>Kelas</th>
                                     <th>Nominal</th>
                                     <th>Aksi</th>

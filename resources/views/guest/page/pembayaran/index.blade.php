@@ -37,6 +37,7 @@
                                     @php
                                       $tanggal_tagihan = \Carbon\Carbon::parse($items->tanggal_tagihan);
                                       $batas_pembayaran = \Carbon\Carbon::parse($items->batas_pembayaran);
+                                      $data_pembayaran = \App\Models\DetailPembayaran::find($items->id);
                                     @endphp 
                                     <tr>
                                         <td >{{ $loop->iteration }}</td>
@@ -45,8 +46,19 @@
                                         <td>{{ $batas_pembayaran->format('d F Y'); }}</td>
                                         <td>{{ $items->semester }}</td>
                                         <td>{{ $items->TahunAjaran->tahun_pelajaran}}</td>
-                                        <td>Belum Dibayar</td>
+                                        <td>
+                                            @if ($data_pembayaran->status_verifikasi==='diterima')
+                                                <span class="badge badge-success text-light p-2">Lunas</span>
+                                                @else
+                                                <span class="badge badge-danger text-light p-2">Belum Dibayar</span>
+                                            @endif
+                                        </td>
                                         <td class="d-flex">
+                                            @if ($data_pembayaran->status_verifikasi==='diterima')
+                                            <a href="/riwayat-tagihan/cetak-nota/{{ $data_pembayaran->id }}/generate-pdf" class="btn btn-success rounded-0 m-2" style="font-size: 12px;">
+                                                Cetak Kwitansi
+                                            </a>
+                                            @else
                                             <a href="{{ route('konfirmasi.pembayaran', [
                                                 "pembayaran_id" => $items->id,
                                                 "tahun_ajaran_id" => $items->TahunAjaran->id,
@@ -55,6 +67,7 @@
                                                 "kelas_id" => Auth::guard('siswas')->user()->kelas_id]) }}" class="btn btn-primary rounded-0 m-2" style="font-size: 12px;">
                                                 Konfirmasi Pembayaran
                                             </a>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach

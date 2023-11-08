@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DetailPembayaranController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JenisPembayaranController;
 use App\Http\Controllers\KelasController;
@@ -33,24 +34,18 @@ Route::get('/login', [AuthenticateController::class, 'indexGuest']);
 Route::post('/login', [AuthenticateController::class, 'loginGuest']);
 Route::post('/logout', [AuthenticateController::class, 'logoutGuest']);
 Route::get('/index', [HomeController::class, 'index']);
-Route::get('/profile', [HomeController::class, 'profile']);
+Route::get('/profile/{id}', [HomeController::class, 'profile']);
 Route::get('/profile/edit/{id}', [HomeController::class, 'editProfileSiswa']);
 Route::put('/profile/{id}/update', [SiswaController::class, 'updateDataSiswa']);
 Route::get('/pembayaran', [HomeController::class, 'pembayaran']);
 Route::get('/pembayaran/konfirmasi', [HomeController::class, 'konfirmasiPembayaran'])->name('konfirmasi.pembayaran');
 Route::post('/pembayaran/konfirmasi', [HomeController::class, 'storePembayaran']);
 Route::get('/riwayat-tagihan/{id}', [HomeController::class, 'riwayatPembayaran']);
-// Create
-Route::put('/persyaratan/ijazah/{id}/update', [PersyaratanController::class, 'uploadIjazah']);
-Route::put('/persyaratan/kartu-keluarga/{id}/update', [PersyaratanController::class, 'uploadKK']);
-Route::put('/persyaratan/akte-kelahiran/{id}/update', [PersyaratanController::class, 'uploadAkte']);
-
-// Delete
-Route::get('/persyaratan/ijazah/{id}/delete', [PersyaratanController::class, 'deleteIjazah']);
-Route::get('/persyaratan/kartu-keluarga/{id}/delete', [PersyaratanController::class, 'deleteKK']);
-Route::get('/persyaratan/akte-kelahiran/{id}/delete', [PersyaratanController::class, 'deleteAkte']);
+Route::get('/riwayat-tagihan/cetak-nota/{id}/generate-pdf', [DetailPembayaranController::class, 'generatePDF']);
 
 Route::get('/admin', [DashboardController::class, 'index'])->middleware('auth');
+Route::get('/admin/detail-pembayaran/{id}', [DashboardController::class, 'detailPembayaran']);
+Route::put('/admin/detail-pembayaran/{id}/update', [DashboardController::class, 'updatePembayaran']);
 
 Route::get('/admin/login', [AuthenticateController::class, 'indexAdmin'])->name('login.admin');
 Route::post('/admin/login', [AuthenticateController::class, 'loginAdmin']);

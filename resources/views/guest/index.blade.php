@@ -27,7 +27,6 @@
                         <p class="caption-navigasi text-light position-absolute w-100 top-50 my-auto font-weight-bold py-3 h5 bg-primary">RIWAYAT TAGIHAN</p>
                     </a>
                 </div>
-           
             </div>
         </div>
     </main>
